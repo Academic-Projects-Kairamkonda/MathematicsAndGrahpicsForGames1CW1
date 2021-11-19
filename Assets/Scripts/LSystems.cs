@@ -28,9 +28,8 @@ public class LSystems : MonoBehaviour
 
         rules = new Dictionary<char, string>
         {
-           // {'X', "[FX][-FX][+FX]" },
-            {'X', "[FX+F-FX]]+FX]+FX" },
-            {'F',"FF" }
+           {'X', "[FX][-FX][+FX]" },
+           {'F',"FF" }
         };
 
         Generate();
