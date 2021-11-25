@@ -11,6 +11,10 @@ namespace LindenmayerSystem
 
         [SerializeField ]private int generations = 0;
 
+        private const string Tree1 = "FF+[+F-F-F]-[-F+F+F]";
+        private const string Tree2 = "F[+F]F[-F]F";
+        private const string Tree3 = "F[+F]F[-F][F]";
+
         //Starting state of the tree
         private string axiom;
 
@@ -35,9 +39,9 @@ namespace LindenmayerSystem
         void Start()
         {
             axiom = "F";
-            rules.Add('F',"FF+[+F-F-F]-[-F+F+F]");
+            rules.Add('F',Tree1);
             angle = 25f;
-            length = 10f;
+            length = 5f;
 
             //Adding the starting position to current string
             currentString = axiom;
@@ -82,7 +86,7 @@ namespace LindenmayerSystem
         /// </summary>
         IEnumerator Generate()
         {
-            length = length / 2f;
+            //length = length / 2f;
 
             //Creating a new string, used to add the newstring to current string
             string newString = "";
