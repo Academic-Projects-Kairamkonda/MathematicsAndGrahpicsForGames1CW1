@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace LindenmayerSystem
 {
-
     public class TransformInfo
     {
         public Vector3 position;
