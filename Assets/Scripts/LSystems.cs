@@ -5,49 +5,59 @@ using UnityEngine;
 
 namespace LindenmayerSystem
 {
-    public class TransformInfo
-    {
-        public Vector3 position;
-        public Quaternion rotation;
-    }
-
     public class LSystems : MonoBehaviour
     {
-        [SerializeField] [Range(0, 4)] private int iteration = 4;
-        [SerializeField] private GameObject Branch;
-        [SerializeField] private float length = 10f;
-        [SerializeField] private float angle = 30f;
+        //Has the whole tree data
+        TreesData treesData = new TreesData();
 
-        private const string axiom = "X";
-
+        //stacking of a string position
         private Stack<TransformInfo> transformStack;
 
         // Rules are mentioned 
-        [SerializeField] public Dictionary<char, string> rules;
+        [SerializeField] public Dictionary<char, string> rules= new Dictionary<char, string>();
 
         //An empty string to load the axiom before iteration
         private string currentString = string.Empty;
 
+        private string axiom = "X";
+
+        //This branch is used to draw line on Game Scene 
+        public GameObject Branch;
+
+        //Angle for rotation of a branch;
+        private float angle;
+
         void Start()
         {
-            transformStack = new Stack<TransformInfo>();
+            TreeSettings temp = treesData.tree1;
+            rules.Add(temp.F, temp.rule);
+            rules.Add('F', "FF");
+            angle = temp.angle;
+            axiom = temp.axiom;
 
+            for (int i = 0; i < temp.n; i++)
+            {
+                Generate();
+            }
+
+            /*
             rules = new Dictionary<char, string>
             {
                {'X', "[FX][-FX][+FX]"},
                {'F',"FFF" }
             };
+            */
 
-            Generate(axiom);
+            //rules.Add(temp.F, temp.rule);
         }
 
-        public void Generate(string s)
+        public void Generate()
         {
-            currentString = s;
+            currentString = axiom;
 
             StringBuilder sb = new StringBuilder();
 
-            for (int i = 0; i < iteration; i++)
+            for (int i = 0; i < sb.Length; i++)
             {
                 foreach (var c in currentString)
                 {
@@ -57,14 +67,13 @@ namespace LindenmayerSystem
                 currentString = sb.ToString();
             }
 
-
             foreach (var c in currentString)
             {
                 switch (c)
                 {
                     case 'F':
                         Vector3 initialPosition = transform.position;
-                        transform.Translate(Vector3.up * length);
+                        transform.Translate(Vector3.up * treesData.length);
 
                         GameObject treeSegment = Instantiate(Branch);
                         treeSegment.GetComponent<LineRenderer>().SetPosition(0, initialPosition);
