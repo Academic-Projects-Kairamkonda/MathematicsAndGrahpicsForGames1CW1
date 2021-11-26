@@ -80,7 +80,7 @@ namespace LindenmayerSystem
                         treeSegment.GetComponent<LineRenderer>().SetPosition(1, transform.position);
                         break;
                     case 'X':
-
+                        break;
                     case '+':
                         transform.Rotate(Vector3.back * angle);
                         break;

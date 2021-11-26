@@ -229,7 +229,7 @@ GameObject:
   m_Layer: 0
   m_Name: KochCurve
   m_TagString: Untagged
-  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   branch: {fileID: 2942493217272964533, guid: 576e51c5e3df54efd83f82040e6c9365, type: 3}
+  trees: 5
 --- !u!4 &788345215
 Transform:
   m_ObjectHideFlags: 0
@@ -311,7 +312,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 163
+  field of view: 160
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -337,7 +338,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 240, z: -40}
+  m_LocalPosition: {x: 0, y: 160, z: -40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

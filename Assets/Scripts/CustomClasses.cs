@@ -47,8 +47,19 @@ namespace LindenmayerSystem
         public TreeSettings tree1 = new TreeSettings("F", 5, 25.7f, 'F', "F[+F]F[-F]F");
         public TreeSettings tree2 = new TreeSettings("F", 5, 20f, 'F', "F[+F]F[-F][F]");
         public TreeSettings tree3 = new TreeSettings("F", 4, 22.5f, 'F', "FF-[-F+F+F]+[+F-F-F]");
-        public TreeSettings tree4 = new TreeSettings("X", 3, 20, 'X', "F[+X]F[-X]+X");
-        public TreeSettings tree5 = new TreeSettings(null, 0, 0, '0', null);
-        public TreeSettings tree6 = new TreeSettings(null, 0, 0, '0', null);
+        public TreeSettings tree4 = new TreeSettings("X", 7, 20, 'X', "F[+X]F[-X]+X");
+        public TreeSettings tree5 = new TreeSettings("X", 7, 25.7f, 'X', "F[+X][-X]FX");
+        public TreeSettings tree6 = new TreeSettings("X", 5, 22.5F, 'X', "F-[[X]+X]+F[+FX]-X");
+    }
+
+    [System.Serializable]
+    public enum Trees
+    {
+        Tree1,
+        Tree2,
+        Tree3,
+        Tree4,
+        Tree5,
+        Tree6
     }
 }
