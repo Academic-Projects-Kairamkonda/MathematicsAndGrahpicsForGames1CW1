@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace LindenmayerSystem
@@ -108,7 +109,7 @@ namespace LindenmayerSystem
                         {'F',"FF" }
                     };
 
-                    length = length / 1f;
+                    length = length / 1.5f;
                     break;
             }
         }
@@ -116,17 +117,93 @@ namespace LindenmayerSystem
 
         void Start()
         {
+            /*
             currentString = axiom;
 
             for (int i = 0; i < n; i++)
             {
-                Generate();
+                GenerateEdgeRewriting();
+            }
+            */
+
+            GenerateNodeRewriting();
+        }
+
+
+        //Node rewriting
+        void GenerateNodeRewriting()
+        {
+            currentString = axiom;
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < n; i++)
+            {
+                foreach (char c in currentString)
+                {
+                    sb.Append(rules.ContainsKey(c) ? rules[c] : c.ToString());
+                }
+
+                currentString = sb.ToString();
+                sb = new StringBuilder();
+            }
+
+            Debug.Log(currentString);
+
+            for (int i = 0; i < currentString.Length; i++)
+            {
+                char currentCharacter = currentString[i];
+
+                if (currentCharacter == 'X')
+                {
+
+                }
+
+                else if (currentCharacter == 'F')
+                {
+                    Vector3 intialPosition = transform.position;
+                    transform.Translate(Vector3.up * length);
+
+                    /*
+                    Debug.DrawLine(intialPosition, transform.position, Color.green, 100000f);
+                    */
+
+                    GameObject treeSegment = Instantiate(branch);
+                    treeSegment.GetComponent<LineRenderer>().SetPosition(0, intialPosition);
+                    treeSegment.GetComponent<LineRenderer>().SetPosition(1, transform.position);
+                    treeSegment.gameObject.transform.SetParent(this.transform);
+                }
+
+                else if (currentCharacter == '+')
+                {
+                    transform.Rotate(Vector3.forward * angle);
+                }
+
+                else if (currentCharacter == '-')
+                {
+                    transform.Rotate(Vector3.forward * -angle);
+                }
+
+                else if (currentCharacter == '[')
+                {
+                    TransformInfo ti = new TransformInfo();
+                    ti.position = transform.position;
+                    ti.rotation = transform.rotation;
+                    transformStack.Push(ti);
+                }
+
+                else if (currentCharacter == ']')
+                {
+                    TransformInfo ti = transformStack.Pop();
+                    transform.position = ti.position;
+                    transform.rotation = ti.rotation;
+                }
             }
         }
 
-        void Generate()
+        //Edge rewriting
+        void GenerateEdgeRewriting()
         {
-
             string newString = "";
 
             char[] stringCharacters = currentString.ToCharArray();
@@ -163,25 +240,27 @@ namespace LindenmayerSystem
 
                 else if (currentCharacter=='F')
                 {
-
                     Vector3 intialPosition = transform.position;
-                    transform.Translate(Vector3.forward * length);
+                    transform.Translate(Vector3.up * length);
+
+                    /*
+                    Debug.DrawLine(intialPosition, transform.position, Color.green, 100000f);
+                    */
 
                     GameObject treeSegment = Instantiate(branch);
-
-                    treeSegment.gameObject.transform.SetParent(tree.transform);
                     treeSegment.GetComponent<LineRenderer>().SetPosition(0, intialPosition);
                     treeSegment.GetComponent<LineRenderer>().SetPosition(1, transform.position);
+                    treeSegment.gameObject.transform.SetParent(this.transform);
                 }
 
                 else if (currentCharacter == '+')
                 {
-                    transform.Rotate(Vector3.up * -angle);
+                    transform.Rotate(Vector3.forward * angle);
                 }
 
                 else if (currentCharacter == '-')
                 {
-                    transform.Rotate(Vector3.up * angle);
+                    transform.Rotate(Vector3.forward * -angle);
                 }
 
                 else if (currentCharacter == '[')
