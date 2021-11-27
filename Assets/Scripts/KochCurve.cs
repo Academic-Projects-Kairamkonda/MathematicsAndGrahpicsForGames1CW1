@@ -7,7 +7,8 @@ namespace LindenmayerSystem
     public class KochCurve : MonoBehaviour
     {
         public GameObject branch;
-        private float length;
+        public GameObject tree;
+        private float length=5f;
 
         private int n;
         private float angle;
@@ -17,53 +18,60 @@ namespace LindenmayerSystem
         private Dictionary<char, string> rules;
         private Stack<TransformInfo> transformStack = new Stack<TransformInfo>();
 
-        TreesData treesData = new TreesData();
-
-        public Trees trees=Trees.Tree1;
+        public Trees trees;
 
         private void Awake()
         {
-            length = treesData.length;
+            TreeSwitch();
+        }
 
+        private void TreeSwitch()
+        {
             switch (trees)
             {
-                default:
-                    break;
                 case Trees.Tree1:
-                    TreeSettings temp1 = treesData.tree1;
-                    n = temp1.n;
-                    angle = temp1.angle;
-                    axiom = temp1.axiom;
-                    rules= new Dictionary<char, string>
-                    { 
-                        { temp1.F, temp1.rule}
+                    n = 5;
+                    angle = 25.7f;
+                    axiom = "F";
+
+                    rules = new Dictionary<char, string>
+                    {
+                        {'F', "F[+F]F[-F]F"}
                     };
+
                     length = length / 5.1f;
                     break;
 
                 case Trees.Tree2:
-                    TreeSettings temp2 = treesData.tree2;
-                    n = temp2.n;
-                    angle = temp2.angle;
-                    axiom = temp2.axiom;
-                    rules.Add(temp2.F, temp2.rule);
+                    n = 5;
+                    angle = 20f;
+                    axiom = "F";
+
+                    rules = new Dictionary<char, string>
+                    {
+                        { 'F', "F[+F]F[-F][F]"}
+                    };
+
                     length = length / 1.35f;
                     break;
 
                 case Trees.Tree3:
-                    TreeSettings temp3 = treesData.tree3;
-                    n = temp3.n;
-                    angle = temp3.angle;
-                    axiom = temp3.axiom;
-                    rules.Add(temp3.F, temp3.rule);
+                    n = 4;
+                    angle = 22.5f;
+                    axiom = "F";
+
+                    rules = new Dictionary<char, string>
+                    {
+                        { 'F', "FF-[-F+F+F]+[+F-F-F]"}
+                    };
+
                     length = length / 1f;
                     break;
 
 
                 case Trees.Tree4:
-                    TreeSettings temp4 = treesData.tree3;
-                    n = temp4.n;
-                    angle = temp4.angle;
+                    n = 7;
+                    angle = 20f;
                     axiom = "X";
                     
                     rules = new Dictionary<char, string>
@@ -72,34 +80,34 @@ namespace LindenmayerSystem
                         {'F',"FF" }
                     };
                     
-                    length = length / 1f;
+                    length = length / 5f;
                     break;
 
                 case Trees.Tree5:
-                    TreeSettings temp5 = treesData.tree3;
-                    n = temp5.n;
-                    angle = temp5.angle;
-                    axiom = temp5.axiom;
+                    n = 7;
+                    angle = 25.7f;
+                    axiom = "X";
+
                     rules = new Dictionary<char, string>
                     {
                         {'X',"F[+X][-X]FX"},
                         {'F',"FF" }
                     };
-                    length = length / 1f;
+
+                    length = length / 6f;
                     break;
 
                 case Trees.Tree6:
-                    TreeSettings temp6 = treesData.tree3;
-                    n = temp6.n;
-                    angle = temp6.angle;
-                    axiom = temp6.axiom;
+                    n = 5;
+                    angle = 22.5f;
+                    axiom = "X";
+
                     rules = new Dictionary<char, string>
                     {
-                        {temp6.F,temp6.rule },
+                        {'X', "F-[[X]+X]+F[+FX]-X"},
                         {'F',"FF" }
                     };
-                    rules.Add('X', "F-[[X]+X]+F[+FX]-X");
-                    rules.Add('F', "FF");
+
                     length = length / 1f;
                     break;
             }
@@ -118,6 +126,7 @@ namespace LindenmayerSystem
 
         void Generate()
         {
+
             string newString = "";
 
             char[] stringCharacters = currentString.ToCharArray();
@@ -128,7 +137,7 @@ namespace LindenmayerSystem
 
                 if (rules.ContainsKey(currentCharacter))
                 {
-                    Debug.Log(currentCharacter);
+                    //Debug.Log(currentCharacter);
                     newString += rules[currentCharacter];
                 }
                 else
@@ -147,42 +156,47 @@ namespace LindenmayerSystem
             {
                 char currentCharacter = stringCharacters[i];
 
-                switch (currentCharacter)
+                if(currentCharacter=='X')
                 {
-                    case 'X':
-                        break;
-                    case 'F':
+
+                }
+
+                else if (currentCharacter=='F')
+                {
+
                     Vector3 intialPosition = transform.position;
                     transform.Translate(Vector3.forward * length);
 
                     GameObject treeSegment = Instantiate(branch);
 
-                    treeSegment.gameObject.transform.SetParent(this.transform);
+                    treeSegment.gameObject.transform.SetParent(tree.transform);
                     treeSegment.GetComponent<LineRenderer>().SetPosition(0, intialPosition);
                     treeSegment.GetComponent<LineRenderer>().SetPosition(1, transform.position);
-                        break;
+                }
 
-
-                    case '+':
+                else if (currentCharacter == '+')
+                {
                     transform.Rotate(Vector3.up * -angle);
-                        break;
-    
-                    case '-':
+                }
+
+                else if (currentCharacter == '-')
+                {
                     transform.Rotate(Vector3.up * angle);
-                    break;
+                }
 
-                    case '[':
-                        TransformInfo ti = new TransformInfo();
-                        ti.position = transform.position;
-                        ti.rotation = transform.rotation;
-                        transformStack.Push(ti);
-                    break;
+                else if (currentCharacter == '[')
+                {
+                    TransformInfo ti = new TransformInfo();
+                    ti.position = transform.position;
+                    ti.rotation = transform.rotation;
+                    transformStack.Push(ti);
+                }
 
-                    case ']':
-                        TransformInfo t = transformStack.Pop();
-                        transform.position = t.position;
-                        transform.rotation = t.rotation;
-                    break;
+                else if (currentCharacter == ']')
+                { 
+                    TransformInfo ti = transformStack.Pop();
+                    transform.position = ti.position;
+                    transform.rotation = ti.rotation;
                 }
             }
         }
