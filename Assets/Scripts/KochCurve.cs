@@ -9,6 +9,7 @@ namespace LindenmayerSystem
     {
         public GameObject branch;
         public GameObject tree;
+        private GameObject tempTree;
         private float length=5f;
 
         private int n;
@@ -23,11 +24,17 @@ namespace LindenmayerSystem
 
         private void Awake()
         {
-            TreeSwitch();
+            TreeType();
         }
 
-        private void TreeSwitch()
+        private void TreeType()
         {
+            if (tempTree != null)
+            {
+                Destroy(tempTree);
+            }
+
+
             switch (trees)
             {
                 case Trees.Tree1:
@@ -40,7 +47,7 @@ namespace LindenmayerSystem
                         {'F', "F[+F]F[-F]F"}
                     };
 
-                    length = length / 5.1f;
+                    length = length / 5f;
                     break;
 
                 case Trees.Tree2:
@@ -95,7 +102,7 @@ namespace LindenmayerSystem
                         {'F',"FF" }
                     };
 
-                    length = length / 6f;
+                    length = length / 5f;
                     break;
 
                 case Trees.Tree6:
@@ -112,6 +119,8 @@ namespace LindenmayerSystem
                     length = length / 1.5f;
                     break;
             }
+
+            GenerateNodeRewriting();
         }
 
 
@@ -126,14 +135,43 @@ namespace LindenmayerSystem
             }
             */
 
-            GenerateNodeRewriting();
+            //GenerateNodeRewriting();
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                NextGame();
+            }
+            if(Input.GetKeyDown(KeyCode.A))
+            {
+                PreviousGame();
+            }
+        }
+
+        public void NextGame()
+        {
+            trees = Trees.Tree4;
+            TreeType();
+        }
+
+        public void PreviousGame()
+        {
+            trees = Trees.Tree2;
+            TreeType();
+        }
 
         //Node rewriting
         void GenerateNodeRewriting()
         {
+            this.transform.position = Vector3.zero;
+
             currentString = axiom;
+
+            tempTree = Instantiate(tree);
+            tempTree.name = axiom;
+         
 
             StringBuilder sb = new StringBuilder();
 
@@ -171,7 +209,7 @@ namespace LindenmayerSystem
                     GameObject treeSegment = Instantiate(branch);
                     treeSegment.GetComponent<LineRenderer>().SetPosition(0, intialPosition);
                     treeSegment.GetComponent<LineRenderer>().SetPosition(1, transform.position);
-                    treeSegment.gameObject.transform.SetParent(this.transform);
+                    treeSegment.gameObject.transform.SetParent(tempTree.transform);
                 }
 
                 else if (currentCharacter == '+')

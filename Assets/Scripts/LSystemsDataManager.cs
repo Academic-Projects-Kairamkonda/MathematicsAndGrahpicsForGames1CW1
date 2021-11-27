@@ -27,4 +27,14 @@ public class LSystemsDataManager : MonoBehaviour
         angle--;
         angleData.text = angle.ToString();
     }
+
+    public void PreviousTree()
+    {
+
+    }
+
+    public void NextTree()
+    {
+
+    }
 }
