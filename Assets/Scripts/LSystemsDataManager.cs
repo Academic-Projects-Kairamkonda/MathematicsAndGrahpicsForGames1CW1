@@ -6,16 +6,11 @@ using TMPro;
 
 namespace LindenmayerSystem
 {
-
     public class LSystemsDataManager : MonoBehaviour
     {
         public KochCurve kochCurve;
 
-        public TextMeshProUGUI generationsText;
-        public TextMeshProUGUI axiomText;
-        public TextMeshProUGUI angleText;
-        public TextMeshProUGUI ruleOneText;
-        public TextMeshProUGUI ruleTwoText;
+        public TreesTextData textData;
 
         private int gen;
         private float angle;
@@ -23,13 +18,25 @@ namespace LindenmayerSystem
         private string ruleOne;
         private Dictionary<char, string> rules;
 
+        private const string checker = "F[+F]F[-F][F]";
+
 
         public void GenerateData()
         {
-            string temp = generationsText.GetComponent<TextMeshProUGUI>().text.ToString();
 
-            int.TryParse(generationsText.GetParsedText(),out int value);
-            Debug.Log("value: "+value);
+            kochCurve.GenerateNodeRewriting(5, 20, axiom, rules = new Dictionary<char, string>
+            {
+                {'F',ruleOne}
+            }, 4.8f);
+        }
+
+
+        string DataText(string dataName,TextMeshProUGUI nameTemp)
+        {
+            string name;
+            name = nameTemp.text.ToString();
+            name = dataName + ": " + name;
+            return name;
 
             /* Debug Data
             Debug.Log(DataText("n", generationsText));
@@ -38,23 +45,6 @@ namespace LindenmayerSystem
             Debug.Log(DataText("rule1", ruleOneText));
             Debug.Log(DataText("rule2", ruleTwoText));
             */
-
-            axiom = axiomText.GetComponent<TextMeshProUGUI>().text.ToString();
-            Debug.Log(axiom);
-            ruleOne = ruleOneText.GetComponent<TextMeshProUGUI>().text.ToString();
-
-            kochCurve.GenerateNodeRewriting(5, 20, "F", rules = new Dictionary<char, string>
-            {
-                {'F',"F[+F]F[-F][F]"}
-            }, 4.8f);
-        }
-
-        string DataText(string dataName,TextMeshProUGUI nameTemp)
-        {
-            string name;
-            name = nameTemp.text.ToString();
-            name = dataName + ": " + name;
-            return name;
         }
 
 

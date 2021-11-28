@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 namespace LindenmayerSystem
 {
     /// <summary>
@@ -61,5 +61,15 @@ namespace LindenmayerSystem
         Tree4,
         Tree5,
         Tree6
+    }
+
+    [System.Serializable]
+    public class TreesTextData
+    {
+        public TextMeshProUGUI generationsText;
+        public TextMeshProUGUI angleText;
+        public TextMeshProUGUI axiomText;
+        public TextMeshProUGUI ruleOneText;
+        public TextMeshProUGUI ruleTwoText;
     }
 }
