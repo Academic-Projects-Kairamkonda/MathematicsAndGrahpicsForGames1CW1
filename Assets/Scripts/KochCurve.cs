@@ -11,7 +11,7 @@ namespace LindenmayerSystem
         [SerializeField]private GameObject tree;
         private GameObject tempTree;
 
-        private float length=5f;
+        private float length;
 
         //Tree data
         private int n;
@@ -35,7 +35,6 @@ namespace LindenmayerSystem
 
         private void TreeType()
         {
-            length = 5f;
 
             if (tempTree!=null)
             {
@@ -54,7 +53,7 @@ namespace LindenmayerSystem
                         {'F', "F[+F]F[-F]F"}
                     };
 
-                    length = length / 5f;
+                    length = 1.25f;
                     break;
 
                 case Trees.Tree2:
@@ -67,7 +66,7 @@ namespace LindenmayerSystem
                         { 'F', "F[+F]F[-F][F]"}
                     };
 
-                    length = length / 1.35f;
+                    length = 4.8f;
                     break;
 
                 case Trees.Tree3:
@@ -80,7 +79,7 @@ namespace LindenmayerSystem
                         { 'F', "FF-[-F+F+F]+[+F-F-F]"}
                     };
 
-                    length = length / 1f;
+                    length =  5.5f;
                     break;
 
 
@@ -95,7 +94,7 @@ namespace LindenmayerSystem
                         {'F',"FF" }
                     };
                     
-                    length = length / 5f;
+                    length = 1.2f;
                     break;
 
                 case Trees.Tree5:
@@ -109,7 +108,7 @@ namespace LindenmayerSystem
                         {'F',"FF" }
                     };
 
-                    length = length / 5f;
+                    length = 1.2f;
                     break;
 
                 case Trees.Tree6:
@@ -123,7 +122,7 @@ namespace LindenmayerSystem
                         {'F',"FF" }
                     };
 
-                    length = length / 1.5f;
+                    length = 3.8f;
                     break;
             }
 
@@ -143,8 +142,9 @@ namespace LindenmayerSystem
 
             tempTree = Instantiate(tree);
 
-            currentString = axiom;
+            this.currentString = axiom;
             this.rules = rules;
+            this.length = length;
 
             currentString = TreeFormula(currentString);
             SpawnTree(currentString);

@@ -20,6 +20,7 @@ namespace LindenmayerSystem
         private int gen;
         private float angle;
         private string axiom;
+        private string ruleOne;
         private Dictionary<char, string> rules;
 
 
@@ -38,10 +39,14 @@ namespace LindenmayerSystem
             Debug.Log(DataText("rule2", ruleTwoText));
             */
 
-            kochCurve.GenerateNodeRewriting(2, 20, "F", rules = new Dictionary<char, string>
+            axiom = axiomText.GetComponent<TextMeshProUGUI>().text.ToString();
+            Debug.Log(axiom);
+            ruleOne = ruleOneText.GetComponent<TextMeshProUGUI>().text.ToString();
+
+            kochCurve.GenerateNodeRewriting(5, 20, "F", rules = new Dictionary<char, string>
             {
-                {'F',"FFFF[+F]" }
-            }, 1.5f);
+                {'F',"F[+F]F[-F][F]"}
+            }, 4.8f);
         }
 
         string DataText(string dataName,TextMeshProUGUI nameTemp)
