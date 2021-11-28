@@ -66,11 +66,11 @@ namespace LindenmayerSystem
     [System.Serializable]
     public class TreesTextData
     {
-        public TextMeshProUGUI generationsText;
-        public TextMeshProUGUI angleText;
-        public TextMeshProUGUI axiomText;
-        public TextMeshProUGUI ruleOneText;
-        public TextMeshProUGUI ruleTwoText;
+        public TMP_InputField generationsText;
+        public TMP_InputField angleText;
+        public TMP_InputField axiomText;
+        public TMP_InputField ruleOneText;
+        public TMP_InputField ruleTwoText;
     }
 
     [System.Serializable]

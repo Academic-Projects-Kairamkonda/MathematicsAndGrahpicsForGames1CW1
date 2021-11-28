@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using System;
 using TMPro;
 
 namespace LindenmayerSystem
@@ -39,51 +40,69 @@ namespace LindenmayerSystem
 
         public void AddGeneration()
         {
-            ResetTree();
-            n++;
-            GenerateNodeRewriting(n,angle,axiom,rules,length);
+            if (n >=0)
+            {
+                ResetTree();
+                n++;
+                GenerateNodeRewriting(n, angle, axiom, rules, length);
+            }
         }
 
         public void SubGeneration()
         {
-            ResetTree();
-            n--;
-            GenerateNodeRewriting(n, angle, axiom, rules, length);
+            if (n >0)
+            {
+                ResetTree();
+                n--;
+                GenerateNodeRewriting(n, angle, axiom, rules, length);
+            }
         }
 
         public void AddAngle()
         {
-            ResetTree();
-            angle++;
-            GenerateNodeRewriting(n, angle, axiom, rules, length);
+            if (angle >= 1)
+            {
+                ResetTree();
+                angle++;
+                GenerateNodeRewriting(n, angle, axiom, rules, length);
+            }
         }
 
         public void SubAngle()
         {
-            ResetTree();
-            angle--;
-            GenerateNodeRewriting(n, angle, axiom, rules, length);
+            if (angle > 0.1)
+            {
+                ResetTree();
+                angle--;
+                GenerateNodeRewriting(n, angle, axiom, rules, length);
+            }
         }
 
         public void AddLength()
         {
-            ResetTree();
-            length++;
-            GenerateNodeRewriting(n, angle, axiom, rules, length);
+            if (length >= 0)
+            {
+                ResetTree();
+                length += 0.1f;
+                GenerateNodeRewriting(n, angle, axiom, rules, length);
+            }
         }
 
         public void SubLength()
         {
-            ResetTree();
-            length--;
-            GenerateNodeRewriting(n, angle, axiom, rules, length);
+            if (length > 0.1)
+            {
+                ResetTree();
+                length -= 0.1f;
+                GenerateNodeRewriting(n, angle, axiom, rules, length);
+            }
         }
 
         private void Update()
         {
             parameterData.generationsText.text = n.ToString();
             parameterData.angleText.text = angle.ToString();
-            parameterData.lengthText.text = length.ToString();
+            parameterData.lengthText.text = length.ToString("F1");
         }
 
         public void ResetTree()
@@ -95,7 +114,6 @@ namespace LindenmayerSystem
 
         private void TreeType()
         {
-
             if (tempTree!=null)
             {
                 Destroy(tempTree);
@@ -196,17 +214,22 @@ namespace LindenmayerSystem
                 Destroy(tempTree);
             }
 
+
             //Resetting position and rotation
             this.transform.position = Vector3.zero;
             this.transform.rotation = Quaternion.identity;
-
             tempTree = Instantiate(tree);
 
-            this.currentString = axiom;
+            this.n = n;
+            this.angle = angle;
+            this.axiom = axiom;
             this.rules = rules;
             this.length = length;
 
+            this.currentString = this.axiom;
+
             currentString = TreeFormula(currentString);
+
             SpawnTree(currentString);
         }
 

@@ -18,17 +18,24 @@ namespace LindenmayerSystem
         private string ruleOne;
         private Dictionary<char, string> rules;
 
-        private const string checker = "F[+F]F[-F][F]";
+        private const string checker1 = "F[+F]F[-F][F]";
+        private const string checker2 = "FF-[-F+F+F]+[+F-F-F]";
 
 
         public void GenerateData()
         {
-            /*
-            kochCurve.GenerateNodeRewriting(5, 20, axiom, rules = new Dictionary<char, string>
+            axiom = textData.axiomText.text.ToString();
+            ruleOne = textData.ruleOneText.text.ToString();
+
+            if(string.IsNullOrEmpty(textData.ruleTwoText.text))
+            {
+                Debug.Log("it is mty");
+            }
+
+            kochCurve.GenerateNodeRewriting(3, 20, axiom, rules = new Dictionary<char, string>
             {
                 {'F',ruleOne}
-            }, 4.8f);
-            */
+            }, 3f);
         }
 
 
