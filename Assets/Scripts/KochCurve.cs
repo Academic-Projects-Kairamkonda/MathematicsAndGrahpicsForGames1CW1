@@ -29,9 +29,68 @@ namespace LindenmayerSystem
         //Enum Types to set data of the trees
         public Trees trees;
 
+        //Parameters text
+        public ParameterData parameterData;
+
         private void Awake()
         {
             TreeType();
+        }
+
+        public void AddGeneration()
+        {
+            ResetTree();
+            n++;
+            GenerateNodeRewriting(n,angle,axiom,rules,length);
+        }
+
+        public void SubGeneration()
+        {
+            ResetTree();
+            n--;
+            GenerateNodeRewriting(n, angle, axiom, rules, length);
+        }
+
+        public void AddAngle()
+        {
+            ResetTree();
+            angle++;
+            GenerateNodeRewriting(n, angle, axiom, rules, length);
+        }
+
+        public void SubAngle()
+        {
+            ResetTree();
+            angle--;
+            GenerateNodeRewriting(n, angle, axiom, rules, length);
+        }
+
+        public void AddLength()
+        {
+            ResetTree();
+            length++;
+            GenerateNodeRewriting(n, angle, axiom, rules, length);
+        }
+
+        public void SubLength()
+        {
+            ResetTree();
+            length--;
+            GenerateNodeRewriting(n, angle, axiom, rules, length);
+        }
+
+        private void Update()
+        {
+            parameterData.generationsText.text = n.ToString();
+            parameterData.angleText.text = angle.ToString();
+            parameterData.lengthText.text = length.ToString();
+        }
+
+        public void ResetTree()
+        {
+            Destroy(tempTree);
+            this.transform.position = Vector3.zero;
+            this.transform.rotation = Quaternion.identity;
         }
 
         private void TreeType()

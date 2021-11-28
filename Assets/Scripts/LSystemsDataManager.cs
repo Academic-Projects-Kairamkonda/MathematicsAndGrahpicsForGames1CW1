@@ -23,11 +23,12 @@ namespace LindenmayerSystem
 
         public void GenerateData()
         {
-
+            /*
             kochCurve.GenerateNodeRewriting(5, 20, axiom, rules = new Dictionary<char, string>
             {
                 {'F',ruleOne}
             }, 4.8f);
+            */
         }
 
 

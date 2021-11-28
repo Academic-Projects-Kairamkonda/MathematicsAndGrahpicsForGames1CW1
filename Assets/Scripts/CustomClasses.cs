@@ -72,4 +72,12 @@ namespace LindenmayerSystem
         public TextMeshProUGUI ruleOneText;
         public TextMeshProUGUI ruleTwoText;
     }
+
+    [System.Serializable]
+    public class ParameterData
+    {
+        public TextMeshProUGUI generationsText;
+        public TextMeshProUGUI angleText;
+        public TextMeshProUGUI lengthText;
+    }
 }
