@@ -392,7 +392,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &110103654
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6340,6 +6340,7 @@ MonoBehaviour:
     axiomText: {fileID: 375097768}
     ruleOneText: {fileID: 1472302358}
     ruleTwoText: {fileID: 478687775}
+    lengthText: {fileID: 110103655}
 --- !u!224 &939704633
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8336,7 +8337,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1444462786
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9375,7 +9376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1581660150
 RectTransform:
   m_ObjectHideFlags: 0

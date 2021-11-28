@@ -71,6 +71,7 @@ namespace LindenmayerSystem
         public TMP_InputField axiomText;
         public TMP_InputField ruleOneText;
         public TMP_InputField ruleTwoText;
+        public TMP_InputField lengthText;
     }
 
     [System.Serializable]

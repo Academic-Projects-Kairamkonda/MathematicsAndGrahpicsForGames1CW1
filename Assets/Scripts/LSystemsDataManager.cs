@@ -16,26 +16,53 @@ namespace LindenmayerSystem
         private float angle;
         private string axiom;
         private string ruleOne;
+        private string ruleTw0;
+        private float length;
         private Dictionary<char, string> rules;
 
         private const string checker1 = "F[+F]F[-F][F]";
         private const string checker2 = "FF-[-F+F+F]+[+F-F-F]";
 
 
+        private const string Xcheck1 = "F[+X]F[-X]+X";
+        private const string Xcheck2 = "FF";
+
+
+        private void ProcessInputData()
+        {
+            gen = int.Parse(textData.generationsText.text.ToString());
+            angle = float.Parse(textData.angleText.text.ToString());
+            axiom = textData.axiomText.text.ToString().ToUpper();
+            ruleOne = textData.ruleOneText.text.ToString().ToUpper();
+            ruleTw0 = textData.ruleTwoText.text.ToString().ToUpper();
+            length = float.Parse(textData.lengthText.text.ToString());
+        }
+
         public void GenerateData()
         {
-            axiom = textData.axiomText.text.ToString();
-            ruleOne = textData.ruleOneText.text.ToString();
+            ProcessInputData();
 
-            if(string.IsNullOrEmpty(textData.ruleTwoText.text))
+            if(string.IsNullOrEmpty(textData.ruleTwoText.text.ToString()))
             {
-                Debug.Log("it is mty");
+                Debug.Log("Rule 2 is Empty");
+
+                kochCurve.GenerateNodeRewriting(gen, angle, axiom, rules = new Dictionary<char, string>
+                {
+                    {'F',ruleOne}
+                }, length);
             }
-
-            kochCurve.GenerateNodeRewriting(3, 20, axiom, rules = new Dictionary<char, string>
+            else
             {
-                {'F',ruleOne}
-            }, 3f);
+                Debug.Log("Rule 2 is assigned");
+
+                rules = new Dictionary<char, string>
+                {
+                    {'X',ruleOne},
+                    {'F',ruleTw0}
+                };
+
+                kochCurve.GenerateNodeRewriting(gen, angle, axiom, rules, length) ;
+            }
         }
 
 
