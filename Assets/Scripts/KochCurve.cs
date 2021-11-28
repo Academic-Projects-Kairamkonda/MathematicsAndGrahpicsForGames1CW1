@@ -29,11 +29,12 @@ namespace LindenmayerSystem
 
         private void TreeType()
         {
-            if (tempTree != null)
+            length = 5f;
+
+            if (tempTree!=null)
             {
                 Destroy(tempTree);
             }
-
 
             switch (trees)
             {
@@ -124,6 +125,48 @@ namespace LindenmayerSystem
         }
 
 
+        public void Tree1()
+        {
+            trees = Trees.Tree1;
+            TreeType();
+        }
+
+        public void Tree2()
+        {
+            trees = Trees.Tree2;
+            TreeType();
+        }
+
+        public void Tree3()
+        {
+            trees = Trees.Tree3;
+            TreeType();
+        }
+
+        public void Tree4()
+        {
+            trees = Trees.Tree4;
+            TreeType();
+        }
+
+        public void Tree5()
+        {
+            trees = Trees.Tree5;
+            TreeType();
+        }
+
+        public void Tree6()
+        {
+            trees = Trees.Tree6;
+            TreeType();
+        }
+
+        public void GenerateTree()
+        {
+            trees = Trees.Tree3;
+            TreeType();
+        }
+
         void Start()
         {
             /*
@@ -135,7 +178,7 @@ namespace LindenmayerSystem
             }
             */
 
-            //GenerateNodeRewriting();
+           // GenerateNodeRewriting();
         }
 
         private void Update()
@@ -148,6 +191,8 @@ namespace LindenmayerSystem
             {
                 PreviousGame();
             }
+
+
         }
 
         public void NextGame()
@@ -166,6 +211,7 @@ namespace LindenmayerSystem
         void GenerateNodeRewriting()
         {
             this.transform.position = Vector3.zero;
+            this.transform.rotation = Quaternion.identity;
 
             currentString = axiom;
 
@@ -186,7 +232,7 @@ namespace LindenmayerSystem
                 sb = new StringBuilder();
             }
 
-            Debug.Log(currentString);
+            //Debug.Log(currentString);
 
             for (int i = 0; i < currentString.Length; i++)
             {

@@ -3,38 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class LSystemsDataManager : MonoBehaviour
+namespace LindenmayerSystem
 {
-    [SerializeField] private float angle = 20;
-    public TextMeshProUGUI angleData;
 
-    private void Awake()
+    public class LSystemsDataManager : KochCurve
     {
-        angleData.text = angle.ToString();
-    }
+        private float angle = 20;
 
-    public void IncrementAngle()
-    {
-        angle++;
-        angleData.text = angle.ToString();
+        //public KochCurve kochCurve;
 
-    }
+        //public TextMeshProUGUI generations;
+        public TextMeshProUGUI angleData;
 
-    public void DecrmentAngle()
-    {
-        if (angle <= 0)
-            return;
-        angle--;
-        angleData.text = angle.ToString();
-    }
+        private void Awake()
+        {
+            angleData.text = angle.ToString();
+        }
 
-    public void PreviousTree()
-    {
+        public void IncrementAngle()
+        {
+            angle++;
+            angleData.text = angle.ToString();
 
-    }
+        }
 
-    public void NextTree()
-    {
+        public void DecrmentAngle()
+        {
+            if (angle <= 0)
+                return;
+            angle--;
+            angleData.text = angle.ToString();
+        }
 
+
+        private void Update()
+        {
+            //generations.text = kochCurve.name;
+        }
     }
 }
