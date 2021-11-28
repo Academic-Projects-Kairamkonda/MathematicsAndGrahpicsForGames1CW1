@@ -7,19 +7,25 @@ namespace LindenmayerSystem
 {
     public class KochCurve : MonoBehaviour
     {
-        public GameObject branch;
-        public GameObject tree;
+        [SerializeField]private GameObject branch;
+        [SerializeField]private GameObject tree;
         private GameObject tempTree;
+
         private float length=5f;
 
+        //Tree data
         private int n;
         private float angle;
-
         private string axiom;
-        private string currentString;
         private Dictionary<char, string> rules;
+
+        //This string hold the whole iteration data
+        private string currentString;
+
+        //Storing the position of the branch
         private Stack<TransformInfo> transformStack = new Stack<TransformInfo>();
 
+        //Enum Types to set data of the trees
         public Trees trees;
 
         private void Awake()
@@ -124,6 +130,111 @@ namespace LindenmayerSystem
             GenerateNodeRewriting();
         }
 
+        public void GenerateNodeRewriting(int n, float angle, string axiom, Dictionary<char, string> rules, float length)
+        {
+            if (tempTree != null)
+            {
+                Destroy(tempTree);
+            }
+
+            //Resetting position and rotation
+            this.transform.position = Vector3.zero;
+            this.transform.rotation = Quaternion.identity;
+
+            tempTree = Instantiate(tree);
+
+            currentString = axiom;
+            this.rules = rules;
+
+            currentString = TreeFormula(currentString);
+            SpawnTree(currentString);
+        }
+
+        //Node rewriting
+        void GenerateNodeRewriting()
+        {
+            //Resetting position and rotation
+            this.transform.position = Vector3.zero;
+            this.transform.rotation = Quaternion.identity;
+
+            tempTree = Instantiate(tree);
+
+            currentString = axiom;
+
+            currentString = TreeFormula(currentString);
+
+            SpawnTree(currentString);
+        }
+
+        string TreeFormula(string currentString)
+        {
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < n; i++)
+            {
+                foreach (char c in currentString)
+                {
+                    sb.Append(rules.ContainsKey(c) ? rules[c] : c.ToString());
+                }
+
+                currentString = sb.ToString();
+                sb = new StringBuilder();
+            }
+
+            return currentString;
+        }
+
+        void SpawnTree(string currentString)
+        {
+            for (int i = 0; i < currentString.Length; i++)
+            {
+                char currentCharacter = currentString[i];
+
+                if (currentCharacter == 'X')
+                {
+
+                }
+
+                else if (currentCharacter == 'F')
+                {
+                    Vector3 intialPosition = transform.position;
+                    transform.Translate(Vector3.up * length);
+
+                    GameObject treeSegment = Instantiate(branch);
+                    treeSegment.GetComponent<LineRenderer>().SetPosition(0, intialPosition);
+                    treeSegment.GetComponent<LineRenderer>().SetPosition(1, transform.position);
+                    treeSegment.gameObject.transform.SetParent(tempTree.transform);
+
+                    //Debug.DrawLine(intialPosition, transform.position, Color.green, 100000f);
+                }
+
+                else if (currentCharacter == '+')
+                {
+                    transform.Rotate(Vector3.forward * angle);
+                }
+
+                else if (currentCharacter == '-')
+                {
+                    transform.Rotate(Vector3.forward * -angle);
+                }
+
+                else if (currentCharacter == '[')
+                {
+                    TransformInfo ti = new TransformInfo();
+                    ti.position = transform.position;
+                    ti.rotation = transform.rotation;
+                    transformStack.Push(ti);
+                }
+
+                else if (currentCharacter == ']')
+                {
+                    TransformInfo ti = transformStack.Pop();
+                    transform.position = ti.position;
+                    transform.rotation = ti.rotation;
+                }
+            }
+        }
 
         public void Tree1()
         {
@@ -163,130 +274,15 @@ namespace LindenmayerSystem
 
         public void GenerateTree()
         {
-            trees = Trees.Tree3;
+            trees = Trees.Tree6;
             TreeType();
         }
 
-        void Start()
-        {
-            /*
-            currentString = axiom;
-
-            for (int i = 0; i < n; i++)
-            {
-                GenerateEdgeRewriting();
-            }
-            */
-
-           // GenerateNodeRewriting();
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                NextGame();
-            }
-            if(Input.GetKeyDown(KeyCode.A))
-            {
-                PreviousGame();
-            }
 
 
-        }
-
-        public void NextGame()
-        {
-            trees = Trees.Tree4;
-            TreeType();
-        }
-
-        public void PreviousGame()
-        {
-            trees = Trees.Tree2;
-            TreeType();
-        }
-
-        //Node rewriting
-        void GenerateNodeRewriting()
-        {
-            this.transform.position = Vector3.zero;
-            this.transform.rotation = Quaternion.identity;
-
-            currentString = axiom;
-
-            tempTree = Instantiate(tree);
-            tempTree.name = axiom;
-         
-
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < n; i++)
-            {
-                foreach (char c in currentString)
-                {
-                    sb.Append(rules.ContainsKey(c) ? rules[c] : c.ToString());
-                }
-
-                currentString = sb.ToString();
-                sb = new StringBuilder();
-            }
-
-            //Debug.Log(currentString);
-
-            for (int i = 0; i < currentString.Length; i++)
-            {
-                char currentCharacter = currentString[i];
-
-                if (currentCharacter == 'X')
-                {
-
-                }
-
-                else if (currentCharacter == 'F')
-                {
-                    Vector3 intialPosition = transform.position;
-                    transform.Translate(Vector3.up * length);
-
-                    /*
-                    Debug.DrawLine(intialPosition, transform.position, Color.green, 100000f);
-                    */
-
-                    GameObject treeSegment = Instantiate(branch);
-                    treeSegment.GetComponent<LineRenderer>().SetPosition(0, intialPosition);
-                    treeSegment.GetComponent<LineRenderer>().SetPosition(1, transform.position);
-                    treeSegment.gameObject.transform.SetParent(tempTree.transform);
-                }
-
-                else if (currentCharacter == '+')
-                {
-                    transform.Rotate(Vector3.forward * angle);
-                }
-
-                else if (currentCharacter == '-')
-                {
-                    transform.Rotate(Vector3.forward * -angle);
-                }
-
-                else if (currentCharacter == '[')
-                {
-                    TransformInfo ti = new TransformInfo();
-                    ti.position = transform.position;
-                    ti.rotation = transform.rotation;
-                    transformStack.Push(ti);
-                }
-
-                else if (currentCharacter == ']')
-                {
-                    TransformInfo ti = transformStack.Pop();
-                    transform.position = ti.position;
-                    transform.rotation = ti.rotation;
-                }
-            }
-        }
 
         //Edge rewriting
-        void GenerateEdgeRewriting()
+        public void GenerateEdgeRewriting()
         {
             string newString = "";
 
