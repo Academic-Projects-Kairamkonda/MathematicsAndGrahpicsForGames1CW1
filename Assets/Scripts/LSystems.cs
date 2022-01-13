@@ -51,6 +51,7 @@ namespace LindenmayerSystem
             //rules.Add(temp.F, temp.rule);
         }
 
+        //It generates the string
         public void Generate()
         {
             currentString = axiom;
